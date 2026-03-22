@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_migrate import Migrate
 from ..database.models import db
 from ..database.repositories_impl import SQLAlchemyAlertRepository, SQLAlchemyHoneytokenRepository
 from ..services.notification_service import NotificationService
@@ -14,6 +15,7 @@ def create_app(config_name=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     db.init_app(app)
+    Migrate(app, db)
     
     alert_repo = SQLAlchemyAlertRepository()
     honeytoken_repo = SQLAlchemyHoneytokenRepository()
