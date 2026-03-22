@@ -1,3 +1,4 @@
+import threading
 from ..domain.entities import Alert
 from ..domain.repositories import AlertRepository
 from ..infrastructure.services.notification_service import NotificationService
@@ -12,7 +13,7 @@ class TriggerAlertUseCase:
         self.notification_service = notification_service
 
     def execute(self, route: str, ip: str, user_agent: str, headers: Dict[str, str]) -> Alert:
-        """Create an alert, save it and notify via Discord/Slack"""
+        """Create and process a security alert asynchronously"""
         
         alert = Alert(
             target_route=route,
@@ -24,6 +25,10 @@ class TriggerAlertUseCase:
         
         saved_alert = self.alert_repo.save(alert)
         
-        self.notification_service.send_alert(saved_alert)
+        threading.Thread(
+            target=self.notification_service.send_alert,
+            args=(saved_alert,),
+            daemon=True
+        ).start()
         
         return saved_alert

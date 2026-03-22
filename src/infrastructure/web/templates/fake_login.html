@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Restricted Access</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #1c1e21; text-align: center; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #4b4f56; font-size: 0.9rem; }
+        input { width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 1rem; }
+        button:hover { background-color: #166fe5; }
+        .warning { color: #f02849; font-size: 0.8rem; text-align: center; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Infrastructure Portal</h2>
+        <p style="text-align: center; color: #606770; font-size: 0.85rem;">Authentication Required</p>
+        <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Authentication system is currently in read-only mode.');">
+            <div class="form-group">
+                <label for="username">Corporate ID</label>
+                <input type="text" id="username" name="username" placeholder="e.g. admin@corp-internal.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="warning">Unauthorized access will be logged and monitored.</div>
+    </div>
+</body>
+</html>

@@ -18,4 +18,5 @@ class Honeytoken:
     route: str
     description: str
     is_active: bool = True
+    response_type: str = 'json'
     id: int = None

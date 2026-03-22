@@ -35,7 +35,8 @@ class SQLAlchemyHoneytokenRepository(HoneytokenRepository):
         honeytoken_db = HoneytokenDB(
             route=honeytoken.route,
             description=honeytoken.description,
-            is_active=honeytoken.is_active
+            is_active=honeytoken.is_active,
+            response_type=honeytoken.response_type
         )
         db.session.add(honeytoken_db)
         db.session.commit()
@@ -49,7 +50,8 @@ class SQLAlchemyHoneytokenRepository(HoneytokenRepository):
                 id=h.id,
                 route=h.route,
                 description=h.description,
-                is_active=h.is_active
+                is_active=h.is_active,
+                response_type=h.response_type
             ) for h in honeytokens_db
         ]
 
@@ -61,5 +63,6 @@ class SQLAlchemyHoneytokenRepository(HoneytokenRepository):
             id=h.id,
             route=h.route,
             description=h.description,
-            is_active=h.is_active
+            is_active=h.is_active,
+            response_type=h.response_type
         )

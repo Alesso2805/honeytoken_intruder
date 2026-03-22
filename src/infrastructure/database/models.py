@@ -10,6 +10,7 @@ class HoneytokenDB(db.Model):
     route = db.Column(db.String(255), unique=True, nullable=False)
     description = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.Boolean, default=True)
+    response_type = db.Column(db.String(50), default='json')
 
 class AlertDB(db.Model):
     __tablename__ = 'alerts'

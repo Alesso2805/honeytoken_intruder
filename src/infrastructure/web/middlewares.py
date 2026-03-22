@@ -1,4 +1,4 @@
-from flask import request, current_app
+from flask import request, current_app, render_template
 from ...application.alert_use_case import TriggerAlertUseCase
 from ...domain.repositories import HoneytokenRepository
 
@@ -8,7 +8,6 @@ def setup_honeytoken_middleware(app, honeytoken_repo: HoneytokenRepository, aler
         """Global interceptor for decoy honeytoken endpoints"""
         
         path = request.path
-        
         honeytoken = honeytoken_repo.find_by_route(path)
         
         if honeytoken and honeytoken.is_active:
@@ -22,5 +21,8 @@ def setup_honeytoken_middleware(app, honeytoken_repo: HoneytokenRepository, aler
                 user_agent=user_agent,
                 headers=headers_dict
             )
+            
+            if honeytoken.response_type == 'html':
+                return render_template('fake_login.html'), 200
             
             return {"message": "Access restricted"}, 403

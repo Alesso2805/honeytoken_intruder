@@ -35,8 +35,9 @@ def create_app(config_name=None):
     with app.app_context():
         db.create_all()
         if not honeytoken_repo.find_all():
-             honeytoken_repo.save(Honeytoken(route="/admin/config-backup", description="Mock Sensitive Backup"))
-             honeytoken_repo.save(Honeytoken(route="/.env", description="Secret Environment Variables"))
-             honeytoken_repo.save(Honeytoken(route="/wp-admin", description="WordPress Mock login"))
+             honeytoken_repo.save(Honeytoken(route="/admin/config-backup", description="Mock Sensitive Backup", response_type='json'))
+             honeytoken_repo.save(Honeytoken(route="/.env", description="Secret Environment Variables", response_type='json'))
+             honeytoken_repo.save(Honeytoken(route="/wp-admin", description="WordPress Mock login", response_type='json'))
+             honeytoken_repo.save(Honeytoken(route="/admin/login", description="Mock Corporate Portal", response_type='html'))
 
     return app

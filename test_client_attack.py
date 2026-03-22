@@ -22,6 +22,13 @@ def simulate_attack():
     r = requests.get(f"{BASE_URL}/admin/config-backup")
     print(f"Status: {r.status_code} | System logic: Honeytoken Triggered")
 
+    print("\n[!] 🎭 DECEPTION: Accessing /admin/login (Fake Portal)...")
+    r = requests.get(f"{BASE_URL}/admin/login")
+    if "Infrastructure Portal" in r.text:
+         print(f"Status: {r.status_code} | System logic: Attacker DECEIVED (Showing Fake Login)")
+    else:
+         print(f"Status: {r.status_code} | System logic: Error in Deception Layer")
+
     print("\n[✔] Check your DB ('honeytoken.db') and Discord Webhook if configured!")
 
 if __name__ == "__main__":
