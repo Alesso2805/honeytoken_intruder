@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_migrate import Migrate
 from ..database.models import db
-from ..database.repositories_impl import SQLAlchemyAlertRepository, SQLAlchemyHoneytokenRepository
+from ..database.repositories_impl import SQLAlchemyAlertRepository, SQLAlchemyHoneytokenRepository, SQLAlchemyBannedIPRepository
 from ..services.notification_service import NotificationService
 from ...application.alert_use_case import TriggerAlertUseCase
 from .middlewares import setup_honeytoken_middleware
@@ -19,11 +19,12 @@ def create_app(config_name=None):
     
     alert_repo = SQLAlchemyAlertRepository()
     honeytoken_repo = SQLAlchemyHoneytokenRepository()
+    banned_ip_repo = SQLAlchemyBannedIPRepository()
     notification_service = NotificationService(os.getenv('DISCORD_WEBHOOK_URL', ''))
     
-    alert_use_case = TriggerAlertUseCase(alert_repo, notification_service)
+    alert_use_case = TriggerAlertUseCase(alert_repo, notification_service, banned_ip_repo)
     
-    setup_honeytoken_middleware(app, honeytoken_repo, alert_use_case)
+    setup_honeytoken_middleware(app, honeytoken_repo, alert_use_case, banned_ip_repo)
     
     @app.route('/api/v1/health')
     def health_check():

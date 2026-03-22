@@ -20,3 +20,11 @@ class Honeytoken:
     is_active: bool = True
     response_type: str = 'json'
     id: int = None
+
+@dataclass
+class BannedIP:
+    """Domain model for temporarily restricted IPs"""
+    ip: str
+    reason: str
+    banned_at: datetime = field(default_factory=datetime.utcnow)
+    id: int = None

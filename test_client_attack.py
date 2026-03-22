@@ -29,6 +29,13 @@ def simulate_attack():
     else:
          print(f"Status: {r.status_code} | System logic: Error in Deception Layer")
 
+    print("\n[!] 🚫 TESTING AUTO-BAN: Accessing /api/v1/health after attack...")
+    r = requests.get(f"{BASE_URL}/api/v1/health")
+    if r.status_code == 401:
+         print(f"Status: {r.status_code} | System logic: IP SUCCESSFULLY BANNED (Access Denied)")
+    else:
+         print(f"Status: {r.status_code} | System logic: Auto-Ban FAILED (Status: {r.status_code})")
+
     print("\n[✔] Check your DB ('honeytoken.db') and Discord Webhook if configured!")
 
 if __name__ == "__main__":

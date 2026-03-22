@@ -1,7 +1,7 @@
 from typing import List, Optional
-from .models import db, AlertDB, HoneytokenDB
-from ...domain.entities import Alert, Honeytoken
-from ...domain.repositories import AlertRepository, HoneytokenRepository
+from .models import db, AlertDB, HoneytokenDB, BannedIPDB
+from ...domain.entities import Alert, Honeytoken, BannedIP
+from ...domain.repositories import AlertRepository, HoneytokenRepository, BannedIPRepository
 
 class SQLAlchemyAlertRepository(AlertRepository):
     def save(self, alert: Alert) -> Alert:
@@ -65,4 +65,27 @@ class SQLAlchemyHoneytokenRepository(HoneytokenRepository):
             description=h.description,
             is_active=h.is_active,
             response_type=h.response_type
+        )
+
+class SQLAlchemyBannedIPRepository(BannedIPRepository):
+    def save(self, banned_ip: BannedIP) -> BannedIP:
+        banned_db = BannedIPDB(
+            ip=banned_ip.ip,
+            reason=banned_ip.reason,
+            banned_at=banned_ip.banned_at
+        )
+        db.session.merge(banned_db)
+        db.session.commit()
+        banned_ip.id = banned_db.id
+        return banned_ip
+
+    def find_by_ip(self, ip: str) -> Optional[BannedIP]:
+        b = BannedIPDB.query.filter_by(ip=ip).first()
+        if not b:
+            return None
+        return BannedIP(
+            id=b.id,
+            ip=b.ip,
+            reason=b.reason,
+            banned_at=b.banned_at
         )
