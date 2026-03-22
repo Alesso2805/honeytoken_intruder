@@ -1,0 +1,13 @@
+# Python environment and caches
+__pycache__/
+.pytest_cache/
+venv/
+.env
+
+# Database (Local storage)
+*.db
+honeytoken.db
+
+# IDE specific (Optional)
+.vscode/
+.idea/
