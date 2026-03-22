@@ -1,0 +1,21 @@
+# Ignore virtual environments
+venv/
+.env
+
+# Cache files
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Databases (Local)
+instance/
+*.db
+
+# Git
+.git
+.gitignore
+
+# Docker specific
+Dockerfile
+docker-compose.yml
+.dockerignore
